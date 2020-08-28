@@ -1,5 +1,7 @@
 {
   "name": "volarys-adm",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
