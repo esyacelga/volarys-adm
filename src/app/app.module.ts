@@ -14,6 +14,8 @@ import {RestConectionModule} from './modules/system/generic/rest-conection/rest-
 import {IonicStorageModule} from '@ionic/storage';
 import {ComponentModule} from './modules/components/component.module';
 import {OneSignal} from '@ionic-native/onesignal/ngx';
+import {WebView} from '@ionic-native/ionic-webview/ngx';
+import {FilePath} from '@ionic-native/file-path/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,6 +28,8 @@ import {OneSignal} from '@ionic-native/onesignal/ngx';
         FileTransfer,
         SplashScreen,
         OneSignal,
+        WebView,
+        FilePath,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent],

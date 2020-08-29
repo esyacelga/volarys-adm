@@ -35,6 +35,9 @@ export class Persona {
     nombres: string = '';
     apellidos: string = '';
     picture: string = '';
+    numeroTelefonoCelular: string = '';
+    numeroTelefonoConvencional = '';
+
 }
 
 export class PedidoResumen {

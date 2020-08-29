@@ -4,9 +4,10 @@ import {RequestOptions} from '../../system/generic/classes/RequestOptions';
 import {ExecuteCallProcedureService} from '../../system/generic/service/execute-call-procedure.service';
 import {URL_CRUD_ARTICULO_IMAGE_UPLOAD} from '../../../constantes/ConstanteTransaccional';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
-import {COLOR_TOAST_ERROR, COLOR_TOAST_WARNING} from '../../system/generic/classes/constant';
+import {COLOR_TOAST_WARNING} from '../../system/generic/classes/constant';
 import {Util} from '../../system/generic/classes/util';
 import {Platform} from '@ionic/angular';
+import {WebView} from '@ionic-native/ionic-webview/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,9 @@ export class ImageGeneratorService {
 
     constructor(private genericService: ExecuteCallProcedureService,
                 private platform: Platform,
+                private webview: WebView,
                 private camera: Camera, private util: Util) {
+
     }
 
     /**
@@ -34,27 +37,41 @@ export class ImageGeneratorService {
 
     }
 
+    public pathForImage(img) {
+        if (img === null) {
+            return '';
+        } else {
+            const converted = this.webview.convertFileSrc(img);
+            return converted;
+        }
+    }
 
     /**
      * El directorio en caso de ser parte de articulos de envia el nombre del segmento
      * @param options
      */
-    public procesarImagen(options: CameraOptions, directorio) {
+    public async procesarImagen(options: CameraOptions, directorio) {
         if (this.platform.is('cordova')) {
             if (!directorio) {
                 this.util.presentToast('No se ha enviado el directorio desde el componente', COLOR_TOAST_WARNING);
             }
-            this.camera.getPicture(options).then((imageData) => {
-                // @ts-ignore
-                const img = window.Ionic.WebView.convertFileSrc(imageData);
+            const imageData = await this.camera.getPicture(options);
+            if (imageData) {
+                const img = this.pathForImage(imageData);
+
                 this.imagenObtenida = img;
-                this.subirImagen(imageData, directorio);
-            }, (err) => {
-                this.util.presentToast('Ocurrion un error al cargar la imagen:' + err, COLOR_TOAST_ERROR);
-            });
+                await this.subirImagen(imageData, directorio);
+            }
+            /*    this.camera.getPicture(options).then(async (imageData) => {
+                    // @ts-ignore
+
+                }, (err) => {
+                    this.util.presentToast('Ocurrion un error al cargar la imagen:' + err, COLOR_TOAST_ERROR);
+                });*/
         } else {
             this.util.presentToast('Opcion no valida desde sistema WEB', COLOR_TOAST_WARNING);
         }
     }
+
 
 }

@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
         this.initializeApp();
     }
 
-   public initializeApp() {
+    public initializeApp() {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
@@ -85,6 +85,7 @@ export class AppComponent implements OnInit {
 
     public iniciaPulginCordova() {
         if (this.platform.is('cordova')) {
+
             this.svtNotificacion.configuracionInicial();
         }
     }

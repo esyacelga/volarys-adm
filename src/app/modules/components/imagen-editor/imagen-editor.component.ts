@@ -13,8 +13,18 @@ export class ImagenEditorComponent implements OnInit, OnDestroy {
     @Input() public directorio = '';
     @Input() public idImagen = '';
 
+    public mostrarImagen = false;
 
     constructor(private camera: Camera, public  svrImagen: ImageGeneratorService, private util: Util) {
+    }
+
+    public mostrarImagenValor(opcion: boolean) {
+        if (opcion === true) {
+            this.mostrarImagen = false;
+        } else {
+            this.mostrarImagen = true;
+        }
+
     }
 
     ngOnInit() {
@@ -28,6 +38,7 @@ export class ImagenEditorComponent implements OnInit, OnDestroy {
     }
 
     public seleccionarPorLibreria() {
+        this.mostrarImagen = false;
         if (!this.directorio) {
             this.util.presentToast('Debe ingresar un directorio valido', COLOR_TOAST_WARNING);
             return;
@@ -44,7 +55,8 @@ export class ImagenEditorComponent implements OnInit, OnDestroy {
         this.svrImagen.procesarImagen(options, this.directorio);
     }
 
-    public seleccionarPoCamara() {
+    public async seleccionarPoCamara() {
+        this.mostrarImagen = false;
         if (!this.directorio) {
             this.util.presentToast('Debe ingresar un directorio valido', COLOR_TOAST_WARNING);
             return;
@@ -57,7 +69,7 @@ export class ImagenEditorComponent implements OnInit, OnDestroy {
             correctOrientation: true,
             sourceType: this.camera.PictureSourceType.CAMERA,
         };
-        this.svrImagen.procesarImagen(options, this.directorio);
+        await this.svrImagen.procesarImagen(options, this.directorio);
     }
 
 }
