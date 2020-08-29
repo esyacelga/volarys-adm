@@ -1,10 +1,9 @@
 <ion-item color="dark">
-    <ion-label>Nombre de Imagen:</ion-label>
     <!--<ion-label>{{idImagen}}</ion-label>-->
-<!--    <ion-button fill="outline" slot="start" (click)="mostrarImagenValor(mostrarImagen)">
-        <ion-icon name="checkmark-circle-outline"></ion-icon>
-        Refresh
-    </ion-button>-->
+    <!--    <ion-button fill="outline" slot="start" (click)="mostrarImagenValor(mostrarImagen)">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            Refresh
+        </ion-button>-->
 
     <ion-button fill="outline" slot="end" (click)="seleccionarPoCamara()">
         <ion-icon name="camera"></ion-icon>
@@ -16,12 +15,7 @@
     </ion-button>
 </ion-item>
 
-
-<!--
-    -->
-
-<!--
-<div *ngIf="mostrarImagen">
+<ion-card>
     <div *ngIf="!svrImagen.imagenObtenida">
         <img [src]="(idImagen | imagen: directorio ) | imageSanitizer">
     </div>
@@ -29,7 +23,5 @@
     <div *ngIf="svrImagen.imagenObtenida">
         <img [src]="svrImagen.imagenObtenida | imageSanitizer">
     </div>
-</div>
--->
-
+</ion-card>
 

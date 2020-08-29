@@ -14,7 +14,7 @@
             <ion-select [(ngModel)]="segmentoArticulo.tipoArticulo"
                         okText="Aceptar" cancelText="Cancelar">
                 <ion-select-option *ngFor="let item  of lstTipoArticulos"
-                                   value="{{item._id}}">{{item.descripcion|uppercase}}</ion-select-option>
+                                   value="{{item._id}}">{{item.nombre|uppercase}}</ion-select-option>
             </ion-select>
             <ion-label position="floating">Descripcion</ion-label>
             <ion-input class="ion-text-uppercase" [(ngModel)]="segmentoArticulo.descripcion"></ion-input>

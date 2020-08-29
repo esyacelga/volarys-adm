@@ -10,9 +10,12 @@
 
     <ion-list *ngIf="!articulo">
         <ion-item-group *ngFor="let item of result; let i = index">
-            <ion-text color="success">
-                <h4>{{item.descripcion | uppercase}}</h4>
-            </ion-text>
+            <!--<ion-text color="success">
+                <h5></h5>
+            </ion-text>-->
+            <ion-item-divider color="dark">
+                <ion-label color="primary">{{item.descripcion | uppercase}}</ion-label>
+            </ion-item-divider>
             <ion-item-sliding *ngFor="let data of lstArticulo | filter:{articuloSegmento: item._id}; let i = index">
                 <ion-item color="dark">
                     <ion-avatar slot="start">

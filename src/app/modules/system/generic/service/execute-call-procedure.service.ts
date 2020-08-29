@@ -261,11 +261,11 @@ export class ExecuteCallProcedureService {
                         } else {
                             this.presentToast(mensaje, COLOR_TOAST_ERROR);
                         }
-                        reject(httpError.error.errors);
+                        resolve(null);
                     } else {
                         await this.loading.dismiss('messagesService.loadMessagesOverview');
                         this.presentToast('Ocurrio un error al ejecutar la solcitud', COLOR_TOAST_ERROR);
-                        reject('Error ala ejecuar la solicitud');
+                        resolve(null);
                     }
 
                 });

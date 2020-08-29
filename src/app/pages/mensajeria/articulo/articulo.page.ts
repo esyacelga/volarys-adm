@@ -59,7 +59,7 @@ export class ArticuloPage implements OnInit {
             return;
         }
         objGuardar.articuloSegmento = objGuardar.articuloSegmento._id;
-        await this.svcArticulo.registarArticulo(objGuardar);
+        const obj: Articulo = (await this.svcArticulo.registarArticulo(objGuardar) as Articulo);
         await this.obtenerArticuloTodos();
         this.articulo = null;
     }
