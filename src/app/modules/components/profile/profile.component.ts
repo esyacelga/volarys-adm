@@ -1,0 +1,139 @@
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ModalController} from '@ionic/angular';
+import {RegistroMensajes} from '../../../classes/login/RegistroMensajes';
+import {Sector} from '../../../classes/persona/Sector';
+import {ModeloPersona, ModeloTipoUsuarioPersona, TipoUsuarioPersonaDto} from '../../../classes/persona/TipoUsuarioPersona';
+import {COLOR_TOAST_DARK, COLOR_TOAST_WARNING} from '../../system/generic/classes/constant';
+import {Util} from '../../system/generic/classes/util';
+import {StorageAppService} from '../../system/generic/service/storage-app.service';
+
+import {PersonaService} from '../../../services/persona/persona.service';
+import {SectorService} from '../../../services/persona/sector.service';
+import {TipoUsuarioPersonaService} from '../../../services/persona/tipo-usuario-persona.service';
+import {TipoUsuarioService} from '../../../services/persona/tipo-usuario.service';
+
+@Component({
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+})
+export class ProfileComponent implements OnInit {
+    public imagen: string;
+    public ruta: string;
+    public tipoUsuarioPersona: TipoUsuarioPersonaDto;
+    public ingresoForm: FormGroup;
+    public lstSectores: Sector[];
+    public modeloPersonaTipoUsuario: ModeloTipoUsuarioPersona;
+    public registoMensajes: RegistroMensajes = new RegistroMensajes();
+    public error_messages = this.registoMensajes.error_messages;
+    public esUsuarioFirebase = false;
+
+    constructor(private formFuilder: FormBuilder, private svrSector: SectorService,
+                private svtTipoUsuariPersona: TipoUsuarioPersonaService,
+                private svrStorage: StorageAppService,
+                private modalCtrl: ModalController,
+                private svrTipoUsuario: TipoUsuarioService, private util: Util, private svrPersona: PersonaService) {
+        this.construirFormRegistro();
+        this.cargar();
+    }
+
+    public async cargar() {
+        this.modeloPersonaTipoUsuario = (await this.svrStorage.loadStorageObject('usuario')) as ModeloTipoUsuarioPersona;
+        this.imagen = this.modeloPersonaTipoUsuario.imagen;
+        this.ruta = this.modeloPersonaTipoUsuario._id;
+    }
+
+
+
+    public construirFormRegistro() {
+        this.ingresoForm = this.formFuilder.group({
+            nombres: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(150),
+            ])),
+            identificacion: new FormControl('', Validators.compose([
+                Validators.minLength(9),
+                Validators.maxLength(10),
+            ])),
+
+            fechaNacimiento: new FormControl('', Validators.compose([
+                Validators.required,
+            ])),
+            callePrincipal: new FormControl('', Validators.compose([
+                Validators.minLength(2),
+                Validators.maxLength(100),
+            ])),
+            calleSecundaria: new FormControl('', Validators.compose([
+                Validators.minLength(2),
+                Validators.maxLength(100),
+            ])),
+            apellidos: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(100),
+            ])),
+            segundoApellido: new FormControl('', null),
+            sector: new FormControl('', null),
+            correo: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.minLength(6),
+                Validators.maxLength(30),
+            ])),
+            numeroTelefonoCelular: new FormControl('', Validators.compose([
+                Validators.minLength(9),
+                Validators.maxLength(10),
+                Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$'),
+            ])),
+            numeroTelefonoConvencional: new FormControl('', Validators.compose([
+                Validators.minLength(9),
+                Validators.maxLength(10),
+                Validators.pattern('^-?[0-9]\\d*(\\.\\d{1,2})?$'),
+            ])),
+        });
+    }
+
+    public async actualizarPersona() {
+        this.tipoUsuarioPersona = this.ingresoForm.value;
+        this.tipoUsuarioPersona._id = this.modeloPersonaTipoUsuario.persona._id;
+        if (this.ingresoForm.status === 'VALID') {
+            if (this.tipoUsuarioPersona.sector === undefined || this.tipoUsuarioPersona.sector === '') {
+                this.util.presentToast('Debe ingresar el sector de domicilio', COLOR_TOAST_WARNING);
+                return;
+            }
+            await this.svrPersona.actualizarPersona(this.tipoUsuarioPersona);
+            const objTipoUsuarioPersona: ModeloTipoUsuarioPersona = (await this.svtTipoUsuariPersona.obtenerPorCorreo(this.modeloPersonaTipoUsuario.persona.correo) as ModeloTipoUsuarioPersona);
+            this.svrStorage.setStorageObject(objTipoUsuarioPersona, 'usuario');
+        } else {
+            this.util.presentToast('Por favor ingrese la información solicitada', COLOR_TOAST_DARK);
+        }
+
+    }
+
+    public async ngOnInit() {
+        this.lstSectores = await this.svrSector.obtenerSectores();
+        const persona: ModeloPersona = await this.svrPersona.obtenerPersonaPorId(this.modeloPersonaTipoUsuario.persona._id);
+        this.esUsuarioFirebase = persona.google;
+        this.setearPersona(this.util.isVoid(this.modeloPersonaTipoUsuario.persona.nombres, this.modeloPersonaTipoUsuario.persona.displayName), this.modeloPersonaTipoUsuario.persona.apellidos,
+            this.modeloPersonaTipoUsuario.persona.identificacion, this.modeloPersonaTipoUsuario.persona.fechaNacimiento,
+            persona.sector, this.modeloPersonaTipoUsuario.usuario.clave, persona.correo, persona.numeroTelefonoConvencional, persona.numeroTelefonoCelular);
+    }
+
+    private setearPersona(nombres: string, apellidos: string, identificacion: string, fechaNacimiento, sector: string, clave: string, correo: string, numeroTelefonoConvencional, numeroTelefonoCelular) {
+        this.ingresoForm.setValue({
+            nombres: this.util.isNull(nombres, ''),
+            apellidos: this.util.isNull(apellidos, ''),
+            segundoApellido: '',
+            identificacion: this.util.isNull(identificacion, ''),
+            fechaNacimiento: this.util.isNull(fechaNacimiento, ''),
+            callePrincipal: '',
+            calleSecundaria: '',
+            sector: this.util.isNull(sector, ''),
+            correo: this.util.isNull(correo, ''),
+            numeroTelefonoConvencional: this.util.isNull(numeroTelefonoConvencional, ''),
+            numeroTelefonoCelular: this.util.isNull(numeroTelefonoCelular, ''),
+        });
+    }
+
+}

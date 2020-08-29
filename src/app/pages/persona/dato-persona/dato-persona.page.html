@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons *ngIf="objTipoUsuarioPersona" slot="end" (click)="objTipoUsuarioPersona=undefined">
+            <ion-back-button></ion-back-button>
+            Regresar
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen color="dark">
+    <ion-list [hidden]="objTipoUsuarioPersona" *ngFor="let persona of lstPersona">
+        <ion-item (click)="selecionPersona(persona._id);objPersona=persona" color="dark">
+            <ion-avatar slot="start">
+                <img [src]="persona.picture|urlSanitizer">
+            </ion-avatar>
+            <ion-label>
+                <h2>{{persona.apellidos}}{{' '}} {{persona.nombres}}</h2>
+                <h3>{{persona.correo}}</h3>
+                <p>{{persona.fechaNacimiento |date}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <div *ngIf="objTipoUsuarioPersona">
+        <app-profile></app-profile>
+    </div>
+</ion-content>

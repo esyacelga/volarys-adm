@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+
+    <ion-list *ngIf="!articulo">
+        <ion-item-group *ngFor="let item of result; let i = index">
+            <ion-text color="success">
+                <h4>{{item.descripcion | uppercase}}</h4>
+            </ion-text>
+            <ion-item-sliding *ngFor="let data of lstArticulo | filter:{articuloSegmento: item._id}; let i = index">
+                <ion-item color="dark">
+                    <ion-label><h5>{{data.descripcion | uppercase}}</h5></ion-label>
+                </ion-item>
+                <ion-item-options side="end">
+                    <ion-item-option color="tertiary" (click)="articulo=data">
+                        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+                    </ion-item-option>
+                    <ion-item-option color="danger" (click)="eliminar(data)">
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-item-group>
+        <ion-button
+                type="submit"
+                (click)="crearNuevo()"
+                color="tertiary"
+                expand="block">Nuevo
+            <ion-icon></ion-icon>
+        </ion-button>
+    </ion-list>
+
+    <ion-list *ngIf="articulo" color="dark">
+        <ion-card color="dark">
+            <app-imagen-editor [idImagen]="articulo.portada" *ngIf="articulo.articuloSegmento._id"
+                               [directorio]="articulo.articuloSegmento._id"></app-imagen-editor>
+            <ion-item color="dark">
+                <ion-label>Tipo Artículo</ion-label>
+                <ion-select [(ngModel)]="articulo.articuloSegmento.tipoArticulo"
+                            okText="Ok" cancelText="Cancelar">
+                    <ion-select-option *ngFor="let item  of lstTipoArticulo"
+                                       value="{{item._id}}">{{item.nombre|uppercase}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label>Segmento</ion-label>
+                <ion-select [(ngModel)]="articulo.articuloSegmento._id"
+                            okText="Ok" cancelText="Cancelar">
+                    <ion-select-option
+                            *ngFor="let item  of lstSegmento | filtroSegmento:{tipoArticulo: articulo.articuloSegmento.tipoArticulo}; "
+                            value="{{item._id}}">{{item.descripcion|uppercase}}</ion-select-option>
+                </ion-select>
+
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label position="floating">Descripcion</ion-label>
+                <ion-input class="ion-text-uppercase" [(ngModel)]="articulo.descripcion"></ion-input>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label position="floating">Unidad Almacenada</ion-label>
+                <ion-input type="number" [(ngModel)]="articulo.unidadAlmacenada"></ion-input>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label position="floating">Costo por unidad</ion-label>
+                <ion-input type="number" [(ngModel)]="articulo.unidadCosto"></ion-input>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label>Es servicio</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="articulo.esServicio"></ion-checkbox>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label>Es Banner</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="articulo.esBanner"></ion-checkbox>
+            </ion-item>
+            <ion-item color="dark">
+                <ion-label>Permite Comentar</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="articulo.permiteComentar"></ion-checkbox>
+            </ion-item>
+            <ion-button
+                    type="submit"
+                    (click)="registrarNuevo(articulo)"
+                    color="success"
+                    expand="block">Guardar
+                <ion-icon></ion-icon>
+            </ion-button>
+            <ion-button
+                    type="submit"
+                    (click)="articulo=undefined"
+                    color="warning"
+                    expand="block">Cancelar
+                <ion-icon></ion-icon>
+            </ion-button>
+        </ion-card>
+    </ion-list>
+</ion-content>
+

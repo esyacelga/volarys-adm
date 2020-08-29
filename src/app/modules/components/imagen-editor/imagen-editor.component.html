@@ -1,0 +1,23 @@
+<ion-card color="dark">
+    <ion-item color="dark">
+        <ion-label>Nombre de Imagen:</ion-label>
+        <ion-label>{{idImagen}}</ion-label>
+        <ion-button fill="outline" slot="end" (click)="seleccionarPoCamara()">
+            <ion-icon name="camera"></ion-icon>
+            Camara
+        </ion-button>
+        <ion-button fill="outline" slot="end" (click)="seleccionarPorLibreria()">
+            <ion-icon name="images"></ion-icon>
+            Galería
+        </ion-button>
+    </ion-item>
+
+    <ion-slide class="image-slide" *ngIf="!svrImagen.imagenObtenida"
+               [style]=" (idImagen | imagen: directorio ) | domSanitizer">
+    </ion-slide>
+
+    <ion-card *ngIf="svrImagen.imagenObtenida">
+        <img [src]="svrImagen.imagenObtenida | imageSanitizer">
+    </ion-card>
+</ion-card>
+

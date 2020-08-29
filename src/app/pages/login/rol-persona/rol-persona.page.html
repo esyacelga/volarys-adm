@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+    {{playerID}}
+</ion-header>
+
+<ion-content fullscreen color="dark">
+    <ion-list [hidden]="objPersona" *ngFor="let persona of lstPersona" color="dark">
+        <ion-item (click)="selecionPersona(persona._id);objPersona=persona" color="dark">
+            <ion-avatar slot="start">
+                <img [src]="persona.picture">
+            </ion-avatar>
+            <ion-label>
+                <h2>{{persona.apellidos}}{{' '}} {{persona.nombres}}</h2>
+                <h3>{{persona.correo}}</h3>
+                <p>{{persona.fechaNacimiento | date}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="objPersona" color="dark">
+        <ion-card>
+            <ion-item color="dark">
+                <ion-avatar slot="start">
+                    <img [src]="objPersona.picture">
+                </ion-avatar>
+                <ion-label>
+                    <h3>{{objPersona.apellidos}}{{' '}} {{objPersona.nombres}}</h3>
+                    <h3>{{objPersona.correo}}</h3>
+                    <p>{{objPersona.fechaNacimiento | date}}</p>
+                </ion-label>
+            </ion-item>
+        </ion-card>
+
+        <div *ngFor="let item of lstTipoUsuarioPersona">
+            <ion-item color="dark">
+                <ion-label>{{item.tipoUsuario.descripcion}}</ion-label>
+                <ion-note slot="end" color="primary">{{item.usuario.playerId}}</ion-note>
+            </ion-item>
+        </div>
+        <section *ngFor="let iterador of lstTipoUsuario">
+            <ion-button (click)="crearRol(iterador)" expand="block">ROL {{' '}}{{iterador.descripcion}}</ion-button>
+        </section>
+        <ion-button
+                type="submit"
+                (click)="objPersona=null"
+                color="warning"
+                expand="block">Cancelar
+            <ion-icon></ion-icon>
+        </ion-button>
+        <ion-button
+                type="submit"
+                (click)="setearIdNotificador()"
+                color="success"
+                expand="block">ACTUALIZAR NOTIFICADOR USUARIO
+            <ion-icon></ion-icon>
+        </ion-button>
+    </ion-list>
+</ion-content>
