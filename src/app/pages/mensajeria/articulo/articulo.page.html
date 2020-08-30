@@ -66,7 +66,7 @@
             </ion-item>
             <ion-item color="dark">
                 <ion-label position="floating">Nombre Articulo</ion-label>
-                <ion-input class="ion-text-uppercase" [(ngModel)]="articulo.descripcion"></ion-input>
+                <ion-input [(ngModel)]="articulo.descripcion"></ion-input>
             </ion-item>
             <ion-item color="dark">
                 <ion-label position="floating">Unidad Almacenada</ion-label>
@@ -96,7 +96,7 @@
 
             <ion-item color="dark" *ngIf="articulo.verObservacion">
                 <ion-label position="floating">Descripcion del articulo</ion-label>
-                <ion-input class="ion-text-uppercase" [(ngModel)]="articulo.obsevacion"></ion-input>
+                <ion-input [(ngModel)]="articulo.obsevacion"></ion-input>
             </ion-item>
 
             <ion-button
