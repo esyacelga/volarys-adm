@@ -14,6 +14,8 @@ export class Articulo {
     public esBanner: false;
     public permiteComentar: false;
     public img?: string[];
+    public verObservacion: false;
+    public obsevacion: string;
 }
 
 
@@ -30,6 +32,8 @@ export class ObjetoArticulo {
     public esServicio: false;
     public esBanner: false;
     public permiteComentar: false;
+    public verObservacion: false;
+    public obsevacion: string;
     public coords: string;
     public img?: string[];
 }

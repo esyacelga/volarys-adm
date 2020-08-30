@@ -253,6 +253,7 @@ export class ExecuteCallProcedureService {
                     resolve(obj);
 
                 }, async httpError => {
+                    console.error(httpError);
                     if (httpError.error && httpError.error.errors && httpError.error.errors.errors) {
                         const mensaje = this.lectorError(httpError.error.errors.errors);
                         await this.loading.dismiss('messagesService.loadMessagesOverview');
@@ -281,14 +282,16 @@ export class ExecuteCallProcedureService {
                     }
                     resolve(obj);
                 }, async error => {
-                    const mensaje = this.lectorError(error.error.errors.errors);
+                    console.error(error);
                     await this.loading.dismiss('messagesService.loadMessagesOverview');
-                    if (error && error.errors && error.errors.errors && mensaje === '') {
-                        this.presentToast(error.errors.errors.message, COLOR_TOAST_ERROR);
-                    } else {
+                    let mensaje = 'Error genericPutRestFull';
+                    if (error && error.error && error.error.errors && error.error.errors.errors) {
+                        mensaje = this.lectorError(error.error.errors.errors);
+                    }
+                    if (mensaje) {
                         this.presentToast(mensaje, COLOR_TOAST_ERROR);
                     }
-                    reject(error);
+                    resolve(null);
                 });
             }
 

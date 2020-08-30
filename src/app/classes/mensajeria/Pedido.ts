@@ -3,6 +3,7 @@ import {ModeloUsuario} from '../persona/TipoUsuarioPersona';
 export class Pedido {
     _id: string = '';
     estado: number = 0;
+    fechaCreacion: Date;
     solicitudDetalle: PedidoDetalle[] = [];
     usuario: string = '';
     tipoUsuarioPerona: TipoUsuarioPerona = new TipoUsuarioPerona();
