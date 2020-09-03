@@ -7,7 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {ArticuloPageRoutingModule} from './articulo-routing.module';
 
 import {ArticuloPage} from './articulo.page';
-import {PipesModule} from '../../../modules/pipes/pipes.module';
+import {PipesModule} from '../../../pipes/pipes.module';
 import {ComponentModule} from '../../../modules/components/component.module';
 
 @NgModule({

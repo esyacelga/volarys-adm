@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ArticuloSegmento} from '../../../classes/mensajeria/articulo-segmento';
-import {TipoArticulo} from '../../../classes/mensajeria/tipo-articulo';
 import {TipoArticuloClientService} from '../../../services/mensajeria/tipo-articulo-client.service';
 import {SegmentoService} from '../../../services/mensajeria/segmento.service';
+import {ArticuloSegmentoInterface} from '../../../classes/interface/inventario/ArticuloSegmentoInterface';
+import {TipoArticuloInterface} from '../../../classes/interface/inventario/TipoArticuloInterface';
 
 @Component({
     selector: 'app-segmento',
@@ -12,8 +13,8 @@ import {SegmentoService} from '../../../services/mensajeria/segmento.service';
 export class SegmentoPage implements OnInit {
 
     segmentoArticulo: ArticuloSegmento;
-    lstSegmento: Array<ArticuloSegmento>;
-    lstTipoArticulos: Array<TipoArticulo>;
+    lstSegmento: ArticuloSegmentoInterface[];
+    lstTipoArticulos: TipoArticuloInterface[];
 
     constructor(private svcTipoArticulo: TipoArticuloClientService, private svcArticuloSegmento: SegmentoService) {
     }
@@ -36,15 +37,16 @@ export class SegmentoPage implements OnInit {
     }
 
     async obtenerTipoArticuloTodos() {
-        // @ts-ignore
-        this.lstTipoArticulos = await this.svcTipoArticulo.obtenerTipoArticulos();
-        console.log(this.lstTipoArticulos);
+        this.lstTipoArticulos = (await this.svcTipoArticulo.obtenerTipoArticulos() as TipoArticuloInterface[]);
     }
 
 
     async obtenerSegmentos() {
-        // @ts-ignore
-        this.lstSegmento = await this.svcArticuloSegmento.obtenerSegmentos();
+        this.lstSegmento = (await this.svcArticuloSegmento.obtenerSegmentos() as ArticuloSegmentoInterface[]);
+        for (const data of this.lstSegmento)
+        {
+            data.idTipoArticulo = data.tipoArticulo._id;
+        }
     }
 
     async eliminar(articuloSegmento: ArticuloSegmento) {

@@ -59,7 +59,7 @@
                 <ion-select [(ngModel)]="articulo.articuloSegmento._id"
                             okText="Ok" cancelText="Cancelar">
                     <ion-select-option
-                            *ngFor="let item  of lstSegmento | filtroSegmento:{tipoArticulo: articulo.articuloSegmento.tipoArticulo}; "
+                            *ngFor="let item  of lstSegmento | genFilter:{idTipoArticulo: articulo.articuloSegmento.tipoArticulo}; "
                             value="{{item._id}}">{{item.descripcion|uppercase}}</ion-select-option>
                 </ion-select>
 
