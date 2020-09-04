@@ -3,10 +3,23 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-buttons *ngIf="objTipoUsuarioPersona" slot="end" (click)="objTipoUsuarioPersona=undefined">
+        <ion-buttons *ngIf="objTipoUsuarioPersona" slot="start" (click)="objTipoUsuarioPersona=undefined">
             <ion-back-button></ion-back-button>
             Regresar
         </ion-buttons>
+
+        <ion-item color="dark" *ngIf="objTipoUsuarioPersona">
+            <h6 slot="end">
+                <small>
+                    {{objTipoUsuarioPersona.persona.displayName}}
+                </small>
+            </h6>
+
+            <ion-avatar slot="end" *ngIf="objTipoUsuarioPersona.persona.picture">
+                <img [src]="objTipoUsuarioPersona.persona.picture |urlSanitizer">
+            </ion-avatar>
+        </ion-item>
+
     </ion-toolbar>
 </ion-header>
 
