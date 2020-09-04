@@ -29,6 +29,11 @@ export class AppComponent implements OnInit {
         },
         {
             title: 'Notificador',
+            url: 'notificador-persona',
+            icon: 'body',
+        },
+        {
+            title: 'Notificador masiva',
             url: 'notificacion-masiva',
             icon: 'notifications',
         },

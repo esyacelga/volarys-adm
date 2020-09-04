@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons *ngIf="objTipoUsuarioPersona" slot="end" (click)="objTipoUsuarioPersona=undefined">
+            <ion-back-button></ion-back-button>
+            Regresar
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen color="dark">
+    <ion-list [hidden]="objNotificacion" *ngFor="let persona of lstPersona">
+        <ion-item color="dark" (click)="activaPanel = true;selecionPersona(persona)">
+            <ion-avatar slot="start">
+                <img [src]="persona.picture|urlSanitizer">
+            </ion-avatar>
+            <ion-label>
+                <h2>{{persona.apellidos}}{{' '}} {{persona.nombres}}</h2>
+                <h3>{{persona.correo}}</h3>
+                <p>{{persona.fechaNacimiento |date}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <pre>
+        {{objTipoUsuarioPersona}}
+    </pre>
+
+    <ion-list *ngIf="objNotificacion">
+        <ion-item  color="dark">
+            <ion-label position="floating">Titulo</ion-label>
+            <ion-input [(ngModel)]="objNotificacion.titulo"></ion-input>
+        </ion-item >
+        <ion-item  color="dark">
+            <ion-label position="floating">Mensaje Titulo</ion-label>
+            <ion-input [(ngModel)]="objNotificacion.mensajeTitulo"></ion-input>
+        </ion-item>
+        <ion-item color="dark">
+            <ion-label position="floating">key</ion-label>
+            <ion-input [(ngModel)]="objNotificacion.key"></ion-input>
+        </ion-item>
+
+        <ion-item color="dark">
+            <ion-label position="floating">Contenido Mensaje</ion-label>
+            <ion-input [(ngModel)]="objNotificacion.keyPayload"></ion-input>
+        </ion-item>
+        <ion-item  color="dark">
+            <ion-label>Segmento de Usuarios</ion-label>
+            <ion-select [(ngModel)]="objNotificacion.tipoUsuario"
+                        okText="Seleccionar" cancelText="Cancelar">
+                <ion-select-option *ngFor="let item  of lstTipoUsuario"
+                                   value="{{item._id}}">{{item.descripcion|uppercase}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-button
+                type="submit"
+                (click)="registrar(objNotificacion)"
+                color="success"
+                expand="block">Guardar
+            <ion-icon></ion-icon>
+        </ion-button>
+        <ion-button
+                type="submit"
+                (click)="objNotificacion=null"
+                color="warning"
+                expand="block">Cancerlar
+            <ion-icon></ion-icon>
+        </ion-button>
+    </ion-list>
+
+
+    <!--<div *ngIf="objTipoUsuarioPersona">
+      <app-profile></app-profile>
+    </div>-->
+</ion-content>
