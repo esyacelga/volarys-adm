@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {
     COLOR_TOAST_ERROR,
+    COLOR_TOAST_MEDIUM,
     COLOR_TOAST_PRIMARY,
     DURATION_TOAST,
     ERROR_MESSAGE,
     LOAD_MESSAGE,
+    OFFLINE,
     PROC_GET_XML_GENERICO,
     PROC_XML_REST_GENERICO,
     SUCCESS_MESSAGE
 } from '../classes/constant';
-import {ToastController} from '@ionic/angular';
+import {Platform, ToastController} from '@ionic/angular';
 import {RequestOptions} from '../classes/RequestOptions';
 import {LoadingService} from './loading.service';
 import {Util} from '../classes/util';
@@ -21,13 +23,15 @@ import {ImageObject} from '../classes/ImageObject';
 })
 export class ExecuteCallProcedureService {
     mostrarMensaje = false;
+    private internetConection = true;
 
     constructor(private utilService: Util,
                 private notify: ToastController,
                 protected loading: LoadingService,
+                private platform: Platform,
                 private restConnection: RestConectionService) {
-    }
 
+    }
 
     public async getGenericObjects(genericObject: any, storeProcedure: string, options?: RequestOptions) {
         if (!options) {
@@ -50,7 +54,7 @@ export class ExecuteCallProcedureService {
             if (options.toastColor === undefined) {
                 options.toastColor = COLOR_TOAST_PRIMARY;
             }
-            await this.loading.present('messagesService.loadMessagesOverview', 'Procesando...');
+
             this.restConnection.procConsultaGenerica(genericObject, storeProcedure, options.restUrl).subscribe(async resp => {
                 this.loading.dismiss('messagesService.loadMessagesOverview');
                 if (resp.RETURN_VALUE !== 1) {
@@ -129,6 +133,10 @@ export class ExecuteCallProcedureService {
         if (!options) {
             options = new RequestOptions();
         }
+        if (this.internetConection === false) {
+            this.presentToast(OFFLINE, COLOR_TOAST_MEDIUM, 'bottom');
+            return;
+        }
         const promesa = new Promise(async (resolve, reject) => {
 
             if (options.successMessaje === undefined) {
@@ -143,15 +151,22 @@ export class ExecuteCallProcedureService {
             if (options.toastColor === undefined) {
                 options.toastColor = COLOR_TOAST_PRIMARY;
             }
-            if (options.mostrar === undefined) {
-                options.mostrar = 1;
+            if (options.presentarToast === undefined) {
+                options.presentarToast = false;
             }
-            if (options.mostrar === 1) {
-                await this.loading.present('messagesService.loadMessagesOverview', 'Procesando...');
+            if (options.mostrarLoading === undefined) {
+                options.mostrarLoading = true;
             }
+            if (options.mostrarLoading === true) {
+                await this.loading.present('messagesService.loadMessagesOverview', options.loadingMessage);
+            }
+
             this.restConnection.genericGetRestFull(genericObject, urlRestService).subscribe(async resp => {
-                if (options.mostrar === 1) {
-                    this.loading.dismiss('messagesService.loadMessagesOverview');
+                if (options.mostrarLoading === true) {
+                    await this.loading.dismiss('messagesService.loadMessagesOverview');
+                }
+                if (options.presentarToast === true) {
+                    this.presentToast(options.successMessaje, options.toastColor);
                 }
                 let obj = null;
                 if (options.responseType === 1) {
@@ -163,17 +178,9 @@ export class ExecuteCallProcedureService {
             }, async error => {
                 const mensaje = this.errorToMessage(error, urlRestService);
                 if (mensaje) {
-                    this.presentToast(mensaje, COLOR_TOAST_ERROR);
                     await this.loading.dismiss('messagesService.loadMessagesOverview');
+                    this.presentToast(mensaje, COLOR_TOAST_ERROR);
                 }
-                /*
-                                if (options.mostrar === 1) {
-                                    await this.loading.dismiss('messagesService.loadMessagesOverview');
-                                }
-                                if (options.mostrar === 1) {
-                                    this.presentToast(options.errorMessage, COLOR_TOAST_ERROR);
-                                }
-                */
                 reject(error);
             });
         });
@@ -181,22 +188,18 @@ export class ExecuteCallProcedureService {
     }
 
     public errorToMessage(error, nombreRest) {
-        let tituloError = 'Ha ocurrido un error: ';
+        let tituloError = '';
         let detalleError = 'Log: ' + nombreRest;
         if (error.error) {
             if (error.error.message) {
                 tituloError = tituloError + error.error.message;
-            } else if (error.message) {
-                tituloError = error.message;
             }
         }
-        tituloError = '<p>' + tituloError + '</p>';
-        if (error.error && error.error.errors && error.error.errors.errors) {
-            detalleError = this.lectorError(error.error.errors.errors);
-        } else {
-            return 'No se puede conectar: ' + tituloError;
+        tituloError = tituloError;
+        if (error.error.errors === undefined) {
+            return 'Error de conexion al servidor de aplicaciones';
         }
-
+        detalleError = this.lectorError(error.error.errors.errors);
         if (this.mostrarMensaje === true) {
             return tituloError + ' </br> ' + detalleError;
         } else {
@@ -220,6 +223,10 @@ export class ExecuteCallProcedureService {
     }
 
     public servicioRestGenericoPost = function(genericObject: any, urlRestService: string, messages?: RequestOptions) {
+        if (this.internetConection === false) {
+            this.presentToast(OFFLINE, COLOR_TOAST_MEDIUM, 'bottom');
+            return;
+        }
         return new Promise(async (resolve, reject) => {
             if (!messages) {
                 messages = new RequestOptions();
@@ -236,14 +243,23 @@ export class ExecuteCallProcedureService {
             if (messages.toastColor === undefined) {
                 messages.toastColor = COLOR_TOAST_PRIMARY;
             }
-
-            await this.loading.present('messagesService.loadMessagesOverview', messages.loadingMessage);
+            if (messages.presentarToast === undefined) {
+                messages.presentarToast = false;
+            }
+            if (messages.mostrarLoading === undefined) {
+                messages.mostrarLoading = true;
+            }
+            if (messages.mostrarLoading === true) {
+                await this.loading.present('messagesService.loadMessagesOverview', messages.loadingMessage);
+            }
             if (!genericObject._id) {
-
                 this.restConnection.genericPostRestFull(genericObject, urlRestService).subscribe(async resp => {
-                    await this.loading.dismiss('messagesService.loadMessagesOverview');
-                    this.presentToast(messages.successMessaje, messages.toastColor);
-
+                    if (messages.mostrarLoading === true) {
+                        await this.loading.dismiss('messagesService.loadMessagesOverview');
+                    }
+                    if (messages.presentarToast === true) {
+                        this.presentToast(messages.successMessaje, messages.toastColor);
+                    }
                     let obj = null;
                     if (messages.responseType === 1) {
                         obj = resp;
@@ -251,29 +267,22 @@ export class ExecuteCallProcedureService {
                         obj = resp.objeto;
                     }
                     resolve(obj);
-
                 }, async httpError => {
-                    console.error(httpError);
-                    if (httpError.error && httpError.error.errors && httpError.error.errors.errors) {
-                        const mensaje = this.lectorError(httpError.error.errors.errors);
-                        await this.loading.dismiss('messagesService.loadMessagesOverview');
-                        if (httpError !== undefined && httpError.error !== undefined && httpError.error.errors !== undefined && mensaje === '') {
-                            this.presentToast(httpError.error.errors.message, COLOR_TOAST_ERROR);
-                        } else {
-                            this.presentToast(mensaje, COLOR_TOAST_ERROR);
-                        }
-                        resolve(null);
+                    const mensaje = this.lectorError(httpError.error.errors.errors);
+                    await this.loading.dismiss('messagesService.loadMessagesOverview');
+                    if (httpError !== undefined && httpError.error !== undefined && httpError.error.errors !== undefined && mensaje === '') {
+                        this.presentToast(httpError.error.errors.message, COLOR_TOAST_ERROR);
                     } else {
-                        await this.loading.dismiss('messagesService.loadMessagesOverview');
-                        this.presentToast('Ocurrio un error al ejecutar la solcitud', COLOR_TOAST_ERROR);
-                        resolve(null);
+                        this.presentToast(mensaje, COLOR_TOAST_ERROR);
                     }
-
+                    reject(httpError.error.errors);
                 });
             } else {
                 this.restConnection.genericPutRestFull(genericObject, urlRestService).subscribe(async resp => {
                     await this.loading.dismiss('messagesService.loadMessagesOverview');
-                    this.presentToast(messages.successMessaje, messages.toastColor);
+                    if (messages.presentarToast === true) {
+                        this.presentToast(messages.successMessaje, messages.toastColor);
+                    }
                     let obj = null;
                     if (messages.responseType === 1) {
                         obj = resp;
@@ -282,16 +291,14 @@ export class ExecuteCallProcedureService {
                     }
                     resolve(obj);
                 }, async error => {
-                    console.error(error);
                     await this.loading.dismiss('messagesService.loadMessagesOverview');
-                    let mensaje = 'Error genericPutRestFull';
+                    let mensaje = 'Error en al ejcuatar la peticion PUT';
                     if (error && error.error && error.error.errors && error.error.errors.errors) {
                         mensaje = this.lectorError(error.error.errors.errors);
-                    }
-                    if (mensaje) {
+                    } else {
                         this.presentToast(mensaje, COLOR_TOAST_ERROR);
                     }
-                    resolve(null);
+                    reject(mensaje);
                 });
             }
 
@@ -343,10 +350,13 @@ export class ExecuteCallProcedureService {
     };
 
 
-    private async presentToast(mensaje, color) {
+    private async presentToast(mensaje, color, position ?) {
+        if (!position) {
+            position = 'top';
+        }
         const toast = await this.notify.create({
             message: mensaje,
-            position: 'top',
+            position,
             duration: DURATION_TOAST,
             color
         });
