@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
         {
             title: 'Notificador',
             url: 'notificador-persona',
-            icon: 'body',
+            icon: 'notifications',
         },
         {
             title: 'Notificador masiva',

@@ -12,7 +12,7 @@
 
 
 <ion-content fullscreen color="dark">
-    <ion-list [hidden]="objNotificacion" *ngFor="let persona of lstPersona">
+    <ion-list [hidden]="objTipoUsuarioPersona" *ngFor="let persona of lstPersona">
         <ion-item color="dark" (click)="activaPanel = true;selecionPersona(persona)">
             <ion-avatar slot="start">
                 <img [src]="persona.picture|urlSanitizer">
@@ -25,11 +25,8 @@
         </ion-item>
     </ion-list>
 
-    <pre>
-        {{objTipoUsuarioPersona}}
-    </pre>
 
-    <ion-list *ngIf="objNotificacion">
+    <ion-list *ngIf="objTipoUsuarioPersona">
         <ion-item  color="dark">
             <ion-label position="floating">Titulo</ion-label>
             <ion-input [(ngModel)]="objNotificacion.titulo"></ion-input>
@@ -38,33 +35,27 @@
             <ion-label position="floating">Mensaje Titulo</ion-label>
             <ion-input [(ngModel)]="objNotificacion.mensajeTitulo"></ion-input>
         </ion-item>
+<!--
         <ion-item color="dark">
             <ion-label position="floating">key</ion-label>
             <ion-input [(ngModel)]="objNotificacion.key"></ion-input>
         </ion-item>
+-->
 
         <ion-item color="dark">
             <ion-label position="floating">Contenido Mensaje</ion-label>
             <ion-input [(ngModel)]="objNotificacion.keyPayload"></ion-input>
         </ion-item>
-        <ion-item  color="dark">
-            <ion-label>Segmento de Usuarios</ion-label>
-            <ion-select [(ngModel)]="objNotificacion.tipoUsuario"
-                        okText="Seleccionar" cancelText="Cancelar">
-                <ion-select-option *ngFor="let item  of lstTipoUsuario"
-                                   value="{{item._id}}">{{item.descripcion|uppercase}}</ion-select-option>
-            </ion-select>
-        </ion-item>
         <ion-button
                 type="submit"
-                (click)="registrar(objNotificacion)"
+                (click)="registroEnvio(objNotificacion)"
                 color="success"
                 expand="block">Guardar
             <ion-icon></ion-icon>
         </ion-button>
         <ion-button
                 type="submit"
-                (click)="objNotificacion=null"
+                (click)="objTipoUsuarioPersona=null"
                 color="warning"
                 expand="block">Cancerlar
             <ion-icon></ion-icon>
