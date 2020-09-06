@@ -197,7 +197,7 @@ export class ExecuteCallProcedureService {
         }
         tituloError = tituloError;
         if (error.error.errors === undefined) {
-            return 'Error de conexion al servidor de aplicaciones';
+            return 'Existe un problema con su conexión de internet';
         }
         detalleError = this.lectorError(error.error.errors.errors);
         if (this.mostrarMensaje === true) {

@@ -3,4 +3,5 @@ export class ArticuloSegmento {
     tipoArticulo: string;
     descripcion: string;
     estado: number;
+    esServicio: boolean;
 }

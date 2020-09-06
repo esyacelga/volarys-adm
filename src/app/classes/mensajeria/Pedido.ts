@@ -1,21 +1,21 @@
 import {ModeloUsuario} from '../persona/TipoUsuarioPersona';
 
 export class Pedido {
-    _id: string = '';
-    estado: number = 0;
+    _id = '';
+    estado = 0;
     fechaCreacion: Date;
     solicitudDetalle: PedidoDetalle[] = [];
-    usuario: string = '';
+    usuario = '';
     tipoUsuarioPerona: TipoUsuarioPerona = new TipoUsuarioPerona();
     user: ModeloUsuario = new ModeloUsuario();
 }
 
 
 export class PedidoDetalle {
-    _id: string = '';
-    estado: number = 0;
-    cantidad: number = 0;
-    unidadCosto: number = 0;
+    _id = '';
+    estado = 0;
+    cantidad = 0;
+    unidadCosto = 0;
     articulo: Artic = new Artic();
 }
 

@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Camera} from '@ionic-native/camera/ngx';
 import {Articulo, ObjetoArticulo} from '../../../classes/mensajeria/Articulo';
 import {ArticuloSegmento} from '../../../classes/mensajeria/articulo-segmento';
-import {TipoArticulo} from '../../../classes/mensajeria/tipo-articulo';
 import {COLOR_TOAST_WARNING} from '../../../modules/system/generic/classes/constant';
 import {Util} from '../../../modules/system/generic/classes/util';
 import {ArticuloService} from '../../../services/mensajeria/articulo.service';
@@ -28,7 +26,6 @@ export class ArticuloPage implements OnInit {
                 private svcSegmento: SegmentoService,
                 private svcArticulo: ArticuloService,
                 private util: Util,
-                private camera: Camera,
     ) {
     }
 
@@ -40,8 +37,7 @@ export class ArticuloPage implements OnInit {
 
     public async obtenerSegementos() {
         this.lstSegmento = (await this.svcSegmento.obtenerSegmentos() as ArticuloSegmentoInterface[]);
-        for (const data of this.lstSegmento)
-        {
+        for (const data of this.lstSegmento) {
             data.idTipoArticulo = data.tipoArticulo._id;
         }
     }

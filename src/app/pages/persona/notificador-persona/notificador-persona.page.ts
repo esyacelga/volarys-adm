@@ -62,8 +62,8 @@ export class NotificadorPersonaPage implements OnInit {
         this.objTipoUsuarioPersona = null;
     }
 
-    public async selecionPersona(persona: string) {
-        this.lstTipoUsuarioPersona = await this.svrPersonaUsuario.obtenerPorPersona(persona);
+    public async selecionPersona(persona: ModeloTipoUsuarioPersona) {
+        this.lstTipoUsuarioPersona = await this.svrPersonaUsuario.obtenerPorPersona(persona._id);
         if (this.lstTipoUsuarioPersona.length > 0) {
             for (const data of this.lstTipoUsuarioPersona) {
                 if (data.usuario.playerId) {
@@ -71,12 +71,9 @@ export class NotificadorPersonaPage implements OnInit {
                 }
             }
         }
-        /*
-        if (this.lstTipoUsuarioPersona.length > 0 && this.lstTipoUsuarioPersona[0].persona && this.lstTipoUsuarioPersona[0].persona.correo) {
-            this.objTipoUsuarioPersona = (await this.svtTipoUsuariPersona.obtenerPorCorreo(this.lstTipoUsuarioPersona[0].persona.correo) as ModeloTipoUsuarioPersona);
-            this.svrStorage.setStorageObject(this.objTipoUsuarioPersona, 'usuario');
+        if (!this.objTipoUsuarioPersona) {
+            this.svrUtil.presentToast('La persona seleccionada no posee un id de notificacion', COLOR_TOAST_WARNING);
         }
-        */
     }
 
     public async ngOnInit() {

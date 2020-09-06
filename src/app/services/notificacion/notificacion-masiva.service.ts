@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {
     CRUD_NOTIFICACION,
     CRUD_NOTIFICACION_ACTUALIZAR,
-    CRUD_REGISTRAR_NOTIFICACION_INDIVIDUAL, ENVIO_NOTIFICACION_INDIVIDUAL,
+    CRUD_REGISTRAR_NOTIFICACION_INDIVIDUAL,
+    ENVIO_NOTIFICACION_INDIVIDUAL,
     ENVIO_NOTIFICACION_MASIVO
 } from '../../constantes/ConstanteTransaccional';
 import {NotificacionModel} from '../../classes/notificacion/NotificacionModel';
@@ -33,18 +34,22 @@ export class NotificacionMasivaService {
 
     public async registarNotificacionIndividual(notificacionModel: NotificacionIndividualClass) {
         const requestOptions = new RequestOptions();
+        requestOptions.mostrarLoading = false;
+        requestOptions.presentarToast = false;
         return await this.svrGenerico.servicioRestGenericoPost(notificacionModel, CRUD_REGISTRAR_NOTIFICACION_INDIVIDUAL, requestOptions) as NotificacionModel;
     }
 
     public async enviarNotificacionIndividual(notificacionModel: NotificacionIndividualClass) {
         const requestOptions = new RequestOptions();
         requestOptions.presentarToast = true;
+        requestOptions.mostrarLoading = false;
         requestOptions.successMessaje = 'Se ha enviado la notificacion de forma exitosa';
         return await this.svrGenerico.servicioRestGenericoGet(notificacionModel, ENVIO_NOTIFICACION_INDIVIDUAL, requestOptions) as NotificacionModel;
     }
 
     public async actualizar(notificacionModel: NotificacionModel) {
         const requestOptions = new RequestOptions();
+        requestOptions.mostrarLoading = false;
         return await this.svrGenerico.servicioRestGenericoPost(notificacionModel, CRUD_NOTIFICACION_ACTUALIZAR, requestOptions) as NotificacionModel;
     }
 
