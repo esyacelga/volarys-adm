@@ -65,7 +65,14 @@
             </ion-item-sliding>
         </ion-item-group>
     </ion-list>
-
-
 </ion-content>
+<ion-footer color="dark" *ngIf="!segmentoArticulo">
+    <ion-button
+            type="submit"
+            (click)="crearNuevo()"
+            color="tertiary"
+            expand="block">Nuevo
+        <ion-icon></ion-icon>
+    </ion-button>
+</ion-footer>
 
