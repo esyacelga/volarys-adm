@@ -33,19 +33,6 @@
     </ion-list>
 
     <ion-item-group *ngIf="contenedor">
-        <section>
-            <ion-button
-                    (click)="actualiarPedido(3,contenedor);enviarMensajeRecepcion(contenedor.pedido, 'Pedido Anulado', 'Su pedido ha sido anulado, si esta información ha sido incorrecta comuniquese con nostros')"
-                    color="warning">
-                Anular
-            </ion-button>
-            <ion-button
-                    (click)="actualiarPedido(2,contenedor);enviarMensajeRecepcion(contenedor.pedido, 'Pedido Finalizado', 'Su pedido ha sido finalizado, el equipo de Volarys agradece mucho su confianza, sería un gusto leer sus comentarios o reacciones en la sección de notifciacones')"
-                    color="success">
-                Finalizar
-            </ion-button>
-        </section>
-
         <ion-item color="dark">
             <ion-label>Total</ion-label>
             <div slot="end">{{ contenedor.total.toFixed(2)}}</div>
