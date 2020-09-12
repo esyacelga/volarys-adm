@@ -48,6 +48,11 @@ export class AppComponent implements OnInit {
             icon: 'body',
         },
         {
+            title: 'Parámetro',
+            url: '/parametro',
+            icon: 'build',
+        },
+        {
             title: 'Tipo Articulo',
             url: 'tipo-articulo',
             icon: 'cube',

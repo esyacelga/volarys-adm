@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'notificador-persona',
     loadChildren: () => import('./pages/persona/notificador-persona/notificador-persona.module').then( m => m.NotificadorPersonaPageModule)
+  },
+  {
+    path: 'parametro',
+    loadChildren: () => import('./pages/common/parametro/parametro.module').then( m => m.ParametroPageModule)
   }
 
 

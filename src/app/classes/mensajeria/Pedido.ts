@@ -1,4 +1,6 @@
 import {ModeloUsuario} from '../persona/TipoUsuarioPersona';
+import {PedidoInterface} from '../interface/mensajeria/PedidoInterface';
+import {PedidoDetalleInterface} from '../interface/mensajeria/PedidoDetalleInterface';
 
 export class Pedido {
     _id = '';
@@ -42,12 +44,12 @@ export class Persona {
 }
 
 export class PedidoResumen {
-    pedido: Pedido;
+    pedido: PedidoInterface;
     usuario: string;
     total = 0;
 
 
-    constructor(pedido: Pedido) {
+    constructor(pedido: PedidoInterface) {
         this.pedido = pedido;
         if (pedido !== null) {
             this.transform(pedido.solicitudDetalle);
@@ -55,7 +57,7 @@ export class PedidoResumen {
     }
 
 
-    transform(lstDetalle: PedidoDetalle[]) {
+    transform(lstDetalle: PedidoDetalleInterface[]) {
         for (const entry of lstDetalle) {
             this.total = (entry.cantidad * entry.unidadCosto) + this.total;
         }

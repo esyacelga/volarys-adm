@@ -9,6 +9,7 @@ import {NotificacionMasivaService} from '../../../services/notificacion/notifica
 import {PersonaModel} from '../../../classes/model/persona/PersonaModel';
 import {Util} from '../../../modules/system/generic/classes/util';
 import {COLOR_TOAST_WARNING} from '../../../modules/system/generic/classes/constant';
+import {PedidoInterface} from '../../../classes/interface/mensajeria/PedidoInterface';
 
 @Component({
     selector: 'app-managment',
@@ -19,8 +20,8 @@ export class ManagmentPage implements OnInit {
 
     pedido: PedidoResumen = new PedidoResumen(null);
     contenedor: PedidoResumen;
-    lstPedido: Pedido[] = [];
-    lstPedidoRemen: PedidoResumen[] = [];
+    lstPedido: PedidoInterface[] = [];
+    lstPedidoResumen: PedidoResumen[] = [];
 
     public itemObject: Pedido;
 
@@ -75,16 +76,14 @@ export class ManagmentPage implements OnInit {
 
 
     async cancelar() {
-        this.lstPedido = await this.svrSolicitud.obtenerPedidos();
+        // this.lstPedido = await this.svrSolicitud.obtenerPedidos();
     }
 
     async ngOnInit() {
-        this.lstPedidoRemen = [];
-        this.lstPedido = await this.svrSolicitud.obtenerPedidos();
-        this.lstPedido =
-            await (this.svrTps.setearTipoUsuarioPersona(this.lstPedido, 'CLIENTE'));
+        this.lstPedidoResumen = [];
+        this.lstPedido = await this.svrSolicitud.obtenerPedidosRecientes();
         for (const iterador of this.lstPedido) {
-            this.lstPedidoRemen.push(new PedidoResumen(iterador));
+            this.lstPedidoResumen.push(new PedidoResumen(iterador));
         }
     }
 }
