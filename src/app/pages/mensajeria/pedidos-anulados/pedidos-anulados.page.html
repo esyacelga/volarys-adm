@@ -1,9 +1,72 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>PedidosAnulados</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true" color="dark">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen color="dark">
+    <ion-list *ngIf="!contenedor && lstPedidoResumen.length>0">
+        <ion-list-header color="dark">
+            <ion-item color="dark">
+                <ion-label>Pedidos Anulados</ion-label>
+            </ion-item>
+        </ion-list-header>
+        <ion-item
+                (click)="contenedor=item;itemObject=item;"
+                *ngFor="let item of lstPedidoResumen" color="dark">
+            <ion-avatar slot="start">
+                <img [src]="item.pedido.tipoUsuarioPersona.persona.picture|urlSanitizer">
+            </ion-avatar>
+            <ion-label>
+                <h2>{{item.pedido.tipoUsuarioPersona.persona.apellidos}}{{' '}}
+                    {{item.pedido.tipoUsuarioPersona.persona.nombres}}
+                </h2>
+                <small>Fecha: {{item.pedido.fechaCreacion | date: 'MM/dd/yy H:mm a'}}</small>
+                <h3>Valor Total: {{' '}}{{item.total.toFixed(2)}}</h3>
+                <small>Convecional: {{item.pedido.tipoUsuarioPersona.persona.numeroTelefonoConvencional}}</small>
+                <small>Celular: {{item.pedido.tipoUsuarioPersona.persona.numeroTelefonoCelular}}{{', '}}</small>
+                <p> # {{' '}}{{item.pedido._id}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ion-item-group *ngIf="contenedor">
+        <section>
+            <ion-button
+                    (click)="actualiarPedido(3,contenedor);enviarMensajeRecepcion(contenedor.pedido, 'Pedido Anulado', 'Su pedido ha sido anulado, si esta información ha sido incorrecta comuniquese con nostros')"
+                    color="warning">
+                Anular
+            </ion-button>
+            <ion-button
+                    (click)="actualiarPedido(2,contenedor);enviarMensajeRecepcion(contenedor.pedido, 'Pedido Finalizado', 'Su pedido ha sido finalizado, el equipo de Volarys agradece mucho su confianza, sería un gusto leer sus comentarios o reacciones en la sección de notifciacones')"
+                    color="success">
+                Finalizar
+            </ion-button>
+        </section>
+
+        <ion-item color="dark">
+            <ion-label>Total</ion-label>
+            <div slot="end">{{ contenedor.total.toFixed(2)}}</div>
+        </ion-item>
+        <ion-item-sliding *ngFor="let item of contenedor.pedido.solicitudDetalle;let i = index">
+            <ion-item>
+                <ion-badge color="secondary">{{(item.cantidad * item.unidadCosto).toFixed(2)}}</ion-badge>
+                <ion-label class="ion-text-right">{{item.articulo.descripcion | uppercase}}</ion-label>
+                <div slot="end">{{item.cantidad}}</div>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option color="danger">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+        <ion-button expand="block" (click)="contenedor = undefined; cancelar()" color="warning">
+            Cancelar
+        </ion-button>
+    </ion-item-group>
+
 
 </ion-content>
+

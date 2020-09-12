@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PedidosNotificadosPageRoutingModule } from './pedidos-notificados-routing.module';
+import { PedidosFinalizadosPageRoutingModule } from './pedidos-finalizados-routing.module';
 
-import { PedidosNotificadosPage } from './pedidos-notificados.page';
+import { PedidosFinalizadosPage } from './pedidos-finalizados.page';
 import {PipesModule} from '../../../modules/pipes/pipes.module';
 
 @NgModule({
@@ -15,8 +15,8 @@ import {PipesModule} from '../../../modules/pipes/pipes.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    PedidosNotificadosPageRoutingModule
+    PedidosFinalizadosPageRoutingModule
   ],
-  declarations: [PedidosNotificadosPage]
+  declarations: [PedidosFinalizadosPage]
 })
-export class PedidosNotificadosPageModule {}
+export class PedidosFinalizadosPageModule {}

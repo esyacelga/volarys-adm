@@ -49,6 +49,24 @@ export class SolicitudService {
     }
 
 
+    async obtenerPedidosNotificados() {
+        const requestOptions = new RequestOptions();
+        const data: PedidoInterface[] = (await this.genericService.servicioRestGenericoGet({estado: 4}, OBTENER_PEDIDOS_POR_ESTADO, requestOptions)) as PedidoInterface[];
+        return data;
+    }
+
+    async obtenerPedidosAnulados() {
+        const requestOptions = new RequestOptions();
+        const data: PedidoInterface[] = (await this.genericService.servicioRestGenericoGet({estado: 3}, OBTENER_PEDIDOS_POR_ESTADO, requestOptions)) as PedidoInterface[];
+        return data;
+    }
+
+    async obtenerPedidosFinalizados() {
+        const requestOptions = new RequestOptions();
+        const data: PedidoInterface[] = (await this.genericService.servicioRestGenericoGet({estado: 2}, OBTENER_PEDIDOS_POR_ESTADO, requestOptions)) as PedidoInterface[];
+        return data;
+    }
+
     setDetalleSolcitud(detalle: SolcitudDetalleModel) {
         this.lstDetalle.push(detalle);
         this.svrStorage.setStorageObject(this.lstDetalle, 'DetalleSolicitud');

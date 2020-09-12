@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'pedidos-recibidos',
     loadChildren: () => import('./pages/mensajeria/pedidos-recibidos/pedidos-recibidos.module').then( m => m.PedidosRecibidosPageModule)
+  },
+  {
+    path: 'pedidos-finalizados',
+    loadChildren: () => import('./pages/mensajeria/pedidos-finalizados/pedidos-finalizados.module').then( m => m.PedidosFinalizadosPageModule)
   }
 
 

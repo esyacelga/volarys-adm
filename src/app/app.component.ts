@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
             icon: 'calculator',
         },
         {
+            title: 'Pedidos Finalizados',
+            url: 'pedidos-finalizados',
+            icon: 'calculator',
+        },
+        {
             title: 'Articulo',
             url: 'articulo',
             icon: 'cube',

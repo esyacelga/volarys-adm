@@ -12,11 +12,11 @@ import {NotificacionIndividualClass} from '../../../classes/model/Notificacion/N
 import {SolcitudCabeceraModel} from '../../../classes/mensajeria/SolcitudCabeceraModel';
 
 @Component({
-  selector: 'app-pedidos-notificados',
-  templateUrl: './pedidos-notificados.page.html',
-  styleUrls: ['./pedidos-notificados.page.scss'],
+  selector: 'app-pedidos-finalizados',
+  templateUrl: './pedidos-finalizados.page.html',
+  styleUrls: ['./pedidos-finalizados.page.scss'],
 })
-export class PedidosNotificadosPage implements OnInit {
+export class PedidosFinalizadosPage implements OnInit {
 
   pedido: PedidoResumen = new PedidoResumen(null);
   contenedor: PedidoResumen;
@@ -78,7 +78,7 @@ export class PedidosNotificadosPage implements OnInit {
 
   async cancelar() {
     this.lstPedidoResumen = [];
-    this.lstPedido = await this.svrSolicitud.obtenerPedidosNotificados();
+    this.lstPedido = await this.svrSolicitud.obtenerPedidosFinalizados();
     for (const iterador of this.lstPedido) {
       this.lstPedidoResumen.push(new PedidoResumen(iterador));
     }
@@ -86,7 +86,7 @@ export class PedidosNotificadosPage implements OnInit {
 
   async ngOnInit() {
     this.lstPedidoResumen = [];
-    this.lstPedido = await this.svrSolicitud.obtenerPedidosNotificados();
+    this.lstPedido = await this.svrSolicitud.obtenerPedidosFinalizados();
     for (const iterador of this.lstPedido) {
       this.lstPedidoResumen.push(new PedidoResumen(iterador));
     }
