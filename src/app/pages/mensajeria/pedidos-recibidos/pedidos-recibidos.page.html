@@ -32,68 +32,6 @@
         </ion-item>
     </ion-list>
 
-    <!--
-        <ion-list *ngIf="!contenedor && lstPedidoRemen.length>0">
-            <ion-list-header color="dark">
-                <ion-item color="dark">
-                    <ion-label>Pedidos con notificación de recepción enviados</ion-label>
-                </ion-item>
-            </ion-list-header>
-            <ion-item (click)="contenedor=item;" *ngFor="let item of lstPedidoRemen | filtroPedido: 4" color="dark">
-                <ion-avatar slot="start">
-                    <img [src]="item.pedido.tipoUsuarioPerona.persona.picture|urlSanitizer">
-                </ion-avatar>
-                <ion-label>
-                    <h2>{{item.pedido.tipoUsuarioPerona.persona.apellidos}}{{' '}}
-                        {{item.pedido.tipoUsuarioPerona.persona.nombres}}
-                    </h2>
-                    <small>Fecha: {{item.pedido.fechaCreacion | date: 'MM/dd/yy H:mm a'}}</small>
-                    <h3>Valor Total: {{' '}}{{item.total.toFixed(2)}}</h3>
-                    <small>Convecional: {{item.pedido.tipoUsuarioPerona.persona.numeroTelefonoConvencional}}</small>
-                    <small>Celular: {{item.pedido.tipoUsuarioPerona.persona.numeroTelefonoCelular}}{{', '}}</small>
-                    <p> # {{' '}}{{item.pedido._id}}</p>
-                </ion-label>
-            </ion-item>
-        </ion-list>
-    -->
-
-
-    <!--<ion-list *ngIf="!contenedor && lstPedidoRemen.length>0" color="dark">
-        <ion-list-header color="dark">
-            <ion-item color="dark">
-                <ion-label>Pedidos Anulados</ion-label>
-            </ion-item>
-        </ion-list-header>
-        <ion-item (click)="contenedor=item" *ngFor="let item of lstPedidoRemen | filtroPedido: 3" color="dark">
-            <ion-avatar slot="start">
-                <img [src]="item.pedido.tipoUsuarioPerona.persona.picture|urlSanitizer">
-            </ion-avatar>
-            <ion-label>
-                <h2>{{item.pedido.tipoUsuarioPerona.persona.apellidos}}{{' '}}{{item.pedido.tipoUsuarioPerona.persona.nombres}}</h2>
-                <h3>Valor Total: {{' '}}{{item.total.toFixed(2)}}</h3>
-                <p> # {{' '}}{{item.pedido._id}}</p>
-            </ion-label>
-        </ion-item>
-    </ion-list>-->
-
-    <!--<ion-list *ngIf="!contenedor && lstPedidoRemen.length>0" color="dark">
-        <ion-list-header color="dark">
-            <ion-item color="dark">
-                <ion-label>Pedidos Finalizados</ion-label>
-            </ion-item>
-        </ion-list-header>
-        <ion-item (click)="contenedor=item" *ngFor="let item of lstPedidoRemen | filtroPedido: 2" color="dark">
-            <ion-avatar slot="start">
-                <img [src]="item.pedido.tipoUsuarioPerona.persona.picture|urlSanitizer">
-            </ion-avatar>
-            <ion-label>
-                <h2>{{item.pedido.tipoUsuarioPerona.persona.apellidos}}{{' '}}{{item.pedido.tipoUsuarioPerona.persona.nombres}}</h2>
-                <h3>Valor Total: {{' '}}{{item.total.toFixed(2)}}</h3>
-                <p> # {{' '}}{{item.pedido._id}}</p>
-            </ion-label>
-        </ion-item>
-    </ion-list>-->
-
     <ion-item-group *ngIf="contenedor">
         <section>
             <ion-button

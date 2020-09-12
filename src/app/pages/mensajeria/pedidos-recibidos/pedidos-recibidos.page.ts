@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {Pedido, PedidoResumen} from '../../../classes/mensajeria/Pedido';
-import {SolicitudService} from '../../../services/mensajeria/solicitud.service';
-import {TipoUsuarioPersonaService} from '../../../services/persona/tipo-usuario-persona.service';
-import {SolcitudCabeceraModel} from '../../../classes/mensajeria/SolcitudCabeceraModel';
-import {NotificacionIndividualClass} from '../../../classes/model/Notificacion/NotificacionIndividualModel';
-import {NotificacionMasivaService} from '../../../services/notificacion/notificacion-masiva.service';
-import {PersonaModel} from '../../../classes/model/persona/PersonaModel';
-import {Util} from '../../../modules/system/generic/classes/util';
-import {COLOR_TOAST_WARNING} from '../../../modules/system/generic/classes/constant';
 import {PedidoInterface} from '../../../classes/interface/mensajeria/PedidoInterface';
+import {SolicitudService} from '../../../services/mensajeria/solicitud.service';
+import {Util} from '../../../modules/system/generic/classes/util';
+import {TipoUsuarioPersonaService} from '../../../services/persona/tipo-usuario-persona.service';
+import {NotificacionMasivaService} from '../../../services/notificacion/notificacion-masiva.service';
+import {COLOR_TOAST_WARNING} from '../../../modules/system/generic/classes/constant';
 import {UsuarioInterface} from '../../../classes/interface/persona/UsuarioInterface';
+import {PersonaModel} from '../../../classes/model/persona/PersonaModel';
+import {NotificacionIndividualClass} from '../../../classes/model/Notificacion/NotificacionIndividualModel';
+import {SolcitudCabeceraModel} from '../../../classes/mensajeria/SolcitudCabeceraModel';
 
 @Component({
-    selector: 'app-managment',
-    templateUrl: './managment.page.html',
-    styleUrls: ['./managment.page.scss'],
+    selector: 'app-pedidos-recibidos',
+    templateUrl: './pedidos-recibidos.page.html',
+    styleUrls: ['./pedidos-recibidos.page.scss'],
 })
-export class ManagmentPage implements OnInit {
+export class PedidosRecibidosPage implements OnInit {
 
     pedido: PedidoResumen = new PedidoResumen(null);
     contenedor: PedidoResumen;
@@ -77,7 +77,11 @@ export class ManagmentPage implements OnInit {
 
 
     async cancelar() {
-        // this.lstPedido = await this.svrSolicitud.obtenerPedidos();
+        this.lstPedidoResumen = [];
+        this.lstPedido = await this.svrSolicitud.obtenerPedidosRecientes();
+        for (const iterador of this.lstPedido) {
+            this.lstPedidoResumen.push(new PedidoResumen(iterador));
+        }
     }
 
     async ngOnInit() {

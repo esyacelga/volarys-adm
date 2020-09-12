@@ -13,8 +13,18 @@ export class AppComponent implements OnInit {
     public selectedIndex = 0;
     public appPages = [
         {
-            title: 'Pedidos',
-            url: 'managment',
+            title: 'Pedidos Recibidos',
+            url: 'pedidos-recibidos',
+            icon: 'calculator',
+        },
+        {
+            title: 'Pedidos Notificados',
+            url: 'pedidos-notificados',
+            icon: 'calculator',
+        },
+        {
+            title: 'Pedidos Anulados',
+            url: 'pedidos-anulados',
             icon: 'calculator',
         },
         {
@@ -90,7 +100,7 @@ export class AppComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.navCtrl.navigateRoot('managment');
+        this.navCtrl.navigateRoot('pedidos-recibidos');
     }
 
     public iniciaPulginCordova() {

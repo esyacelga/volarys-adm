@@ -6,4 +6,4 @@ export interface TipoUsuarioPersonaInterface {
     persona: PersonaInterface;
     usuario: UsuarioInterface;
 
-};
+}

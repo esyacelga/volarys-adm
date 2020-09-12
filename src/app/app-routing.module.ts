@@ -38,6 +38,18 @@ const routes: Routes = [
   {
     path: 'parametro',
     loadChildren: () => import('./pages/common/parametro/parametro.module').then( m => m.ParametroPageModule)
+  },
+  {
+    path: 'pedidos-anulados',
+    loadChildren: () => import('./pages/mensajeria/pedidos-anulados/pedidos-anulados.module').then( m => m.PedidosAnuladosPageModule)
+  },
+  {
+    path: 'pedidos-notificados',
+    loadChildren: () => import('./pages/mensajeria/pedidos-notificados/pedidos-notificados.module').then( m => m.PedidosNotificadosPageModule)
+  },
+  {
+    path: 'pedidos-recibidos',
+    loadChildren: () => import('./pages/mensajeria/pedidos-recibidos/pedidos-recibidos.module').then( m => m.PedidosRecibidosPageModule)
   }
 
 
