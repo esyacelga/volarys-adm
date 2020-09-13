@@ -1,3 +1,4 @@
+
 export interface ParametroInterface {
     _id: string;
     codigo: string,

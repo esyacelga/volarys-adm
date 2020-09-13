@@ -1,5 +1,6 @@
 export const OBTENER_PEDIDOS = 'solicitud/obtenerPedidos';
 export const OBTENER_PEDIDOS_POR_ESTADO = 'solicitud/obtenerPedidoPorEstado';
+export const OBTENER_PEDIDOS_POR_USUARIO = 'solicitud/obtenerPedidoUsuario';
 export const OBTENER_TODOS_PERSONA = 'persona/obtenerTodos';
 export const OBTENER_TODOS_PERSONA_POR_ID = 'persona/obtenerPersonaPorID';
 export const OBTENER_TODOS_NOTIFICACIONES = 'notificacion/obtenerTodos';
@@ -7,7 +8,7 @@ export const OBTENER_TODOS_SECTOR = 'sector/obtenerTodosSectores';
 export const OBTENER_TODOS_VEHICULO = 'vehiculoRoute/obtenerTodos';
 export const OBTENER_TODOS_RUTA_DISPONIBILIDAD = 'ruta/ObtenerIntegrantes';
 export const OBTENER_TODOS_ESTADO_RUTA = 'estadoRutaRoute/obtenerTodos';
-export const OBTENER_EVIO_NOTIFICACION = 'notificacion';
+export const OBTENER_TODOS_PARMETROS = 'parametro/obtenerTodos';
 export const OBTENER_TODOS_TIPO_USUARIO = 'tipoUsuario/obtenerTodos';
 export const OBTENER_TODOS_TIPO_USUARIO_POR_CODIGO = 'tipoUsuario/ObtenerPorCodigo';
 export const OBTENER_TIPO_USUARIO = 'tipoUsuario/ObtenerPorCampoValor';

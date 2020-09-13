@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {SolcitudCabeceraModel, SolcitudDetalleModel} from '../../classes/mensajeria/SolcitudCabeceraModel';
 import {CRUD_ACTUALIZAR_SOLICITUD, CRUD_SOLICITUD} from '../../constantes/ConstanteTransaccional';
 import {Articulo} from '../../classes/mensajeria/Articulo';
-import {OBTENER_PEDIDOS, OBTENER_PEDIDOS_POR_ESTADO} from '../../constantes/ConstanteConsulta';
+import {OBTENER_PEDIDOS, OBTENER_PEDIDOS_POR_ESTADO, OBTENER_PEDIDOS_POR_USUARIO} from '../../constantes/ConstanteConsulta';
 import {Pedido} from '../../classes/mensajeria/Pedido';
 import {StorageAppService} from '../../modules/system/generic/service/storage-app.service';
 import {ExecuteCallProcedureService} from '../../modules/system/generic/service/execute-call-procedure.service';
@@ -48,6 +48,11 @@ export class SolicitudService {
         return data;
     }
 
+    async obtenerPedidosPotUsuario(usuario: string) {
+        const requestOptions = new RequestOptions();
+        const data: PedidoInterface[] = (await this.genericService.servicioRestGenericoGet({usuario}, OBTENER_PEDIDOS_POR_USUARIO, requestOptions)) as PedidoInterface[];
+        return data;
+    }
 
     async obtenerPedidosNotificados() {
         const requestOptions = new RequestOptions();
