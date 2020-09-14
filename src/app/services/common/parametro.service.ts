@@ -4,7 +4,6 @@ import {OBTENER_TODOS_PARMETROS} from '../../constantes/ConstanteConsulta';
 import {CRUD_PARAMETRO} from '../../constantes/ConstanteTransaccional';
 import {RequestOptions} from '../../modules/system/generic/classes/RequestOptions';
 import {ExecuteCallProcedureService} from '../../modules/system/generic/service/execute-call-procedure.service';
-import {ParametroInterface} from '../../classes/interface/common/ParametroInterface';
 import {ParametroClass} from '../../classes/interface/common/ParametroClass';
 
 
