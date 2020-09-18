@@ -10,6 +10,7 @@ import {Util} from '../../../modules/system/generic/classes/util';
 import {COLOR_TOAST_WARNING} from '../../../modules/system/generic/classes/constant';
 import {PedidoInterface} from '../../../classes/interface/mensajeria/PedidoInterface';
 import {UsuarioInterface} from '../../../classes/interface/persona/UsuarioInterface';
+import {CallNumber} from '@ionic-native/call-number/ngx';
 
 @Component({
     selector: 'app-managment',
@@ -28,6 +29,7 @@ export class ManagmentPage implements OnInit {
 
     constructor(private svrSolicitud: SolicitudService,
                 private util: Util,
+                private callNumber: CallNumber,
                 private svrTps: TipoUsuarioPersonaService,
                 private svrNot: NotificacionMasivaService) {
 

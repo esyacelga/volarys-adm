@@ -79,6 +79,21 @@
                 <ion-checkbox slot="end" [(ngModel)]="articulo.esBanner"></ion-checkbox>
             </ion-item>
             <ion-item color="dark">
+                <ion-label>Ocultar boton solicitar</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="articulo.ocultarBotonSolicitar"></ion-checkbox>
+            </ion-item>
+
+            <ion-item color="dark" *ngIf="articulo.esServicio">
+                <ion-label >Hora inicio</ion-label>
+                <ion-datetime display-format="h:mm A" picker-format="h:mm A" [(ngModel)]="articulo.horaInicio"></ion-datetime>
+            </ion-item>
+
+            <ion-item color="dark" *ngIf="articulo.esServicio">
+                <ion-label >Hora fin</ion-label>
+                <ion-datetime display-format="h:mm A" picker-format="h:mm A" [(ngModel)]="articulo.horaFin"></ion-datetime>
+            </ion-item>
+
+            <ion-item color="dark">
                 <ion-label>Permite Comentar</ion-label>
                 <ion-checkbox slot="end" [(ngModel)]="articulo.permiteComentar"></ion-checkbox>
             </ion-item>
@@ -112,11 +127,13 @@
 </ion-content>
 
 <ion-footer *ngIf="!articulo">
-    <ion-button
-            type="submit"
-            (click)="crearNuevo()"
-            color="tertiary"
-            expand="block">Nuevo
-        <ion-icon></ion-icon>
-    </ion-button>
+    <ion-toolbar color="dark">
+        <ion-button
+                type="submit"
+                (click)="crearNuevo()"
+                color="tertiary"
+                expand="block">Nuevo
+            <ion-icon></ion-icon>
+        </ion-button>
+    </ion-toolbar>
 </ion-footer>

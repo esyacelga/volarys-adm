@@ -16,6 +16,7 @@ import {ComponentModule} from './modules/components/component.module';
 import {OneSignal} from '@ionic-native/onesignal/ngx';
 import {WebView} from '@ionic-native/ionic-webview/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
+import {CallNumber} from '@ionic-native/call-number/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,6 +26,7 @@ import {FilePath} from '@ionic-native/file-path/ngx';
         ComponentModule,
         StatusBar,
         Camera,
+        CallNumber,
         FileTransfer,
         SplashScreen,
         OneSignal,

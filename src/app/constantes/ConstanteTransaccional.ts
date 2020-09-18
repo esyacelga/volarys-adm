@@ -17,6 +17,8 @@ export const CRUD_ARTICULO = 'articulo';
 export const CRUD_PARAMETRO = 'parametro';
 export const CRUD_ARTICULO_SIMPLE = 'articulo/registrarArticulo';
 
+
+export const CRUD_ELIMINAR = 'tipoUsuarioPersona/eliminar';
 export const CRUD_USUARIO = 'usuario';
 export const CRUD_TIPO_USUARIO = 'tipoUsuario';
 export const CRUD_TIPO_USUARIO_PERSONA = 'tipoUsuarioPersona';

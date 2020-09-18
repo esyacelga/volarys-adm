@@ -10,6 +10,7 @@ import {UsuarioInterface} from '../../../classes/interface/persona/UsuarioInterf
 import {PersonaModel} from '../../../classes/model/persona/PersonaModel';
 import {NotificacionIndividualClass} from '../../../classes/model/Notificacion/NotificacionIndividualModel';
 import {SolcitudCabeceraModel} from '../../../classes/mensajeria/SolcitudCabeceraModel';
+import {CallNumber} from '@ionic-native/call-number/ngx';
 
 @Component({
   selector: 'app-pedidos-notificados',
@@ -28,10 +29,17 @@ export class PedidosNotificadosPage implements OnInit {
 
   constructor(private svrSolicitud: SolicitudService,
               private util: Util,
+              private callNumber: CallNumber,
               private svrTps: TipoUsuarioPersonaService,
               private svrNot: NotificacionMasivaService) {
 
   }
+  public callNow(phoneNumber: string) {
+    this.callNumber.callNumber(phoneNumber, true)
+        .then(res => console.log('Launched dialer!', res))
+        .catch(err => console.log('Error launching dialer', err));
+  }
+
 
   async enviarMensajeRecepcion(pedido: PedidoInterface, titulo, mensaje) {
     if (!pedido) {

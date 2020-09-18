@@ -29,6 +29,7 @@
                 <small>Celular: {{item.pedido.tipoUsuarioPersona.persona.numeroTelefonoCelular}}{{', '}}</small>
                 <p> # {{' '}}{{item.pedido._id}}</p>
             </ion-label>
+
         </ion-item>
     </ion-list>
 
@@ -43,6 +44,10 @@
                     (click)="actualiarPedido(2,contenedor);enviarMensajeRecepcion(contenedor.pedido, 'Pedido Finalizado', 'Su pedido ha sido finalizado, el equipo de Volarys agradece mucho su confianza, sería un gusto leer sus comentarios o reacciones en la sección de notifciacones')"
                     color="success">
                 Finalizar
+            </ion-button>
+            <ion-button color="primary"
+                    (click)="callNow(contenedor.pedido.tipoUsuarioPersona.persona.numeroTelefonoCelular)">
+                <ion-icon name="call-outline" slot="icon-only"></ion-icon>
             </ion-button>
         </section>
 

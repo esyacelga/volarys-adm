@@ -47,6 +47,11 @@ export class RolPersonaPage implements OnInit {
         this.lstTipoUsuarioPersona = await this.svrPersonaUsuario.obtenerPorPersona(tipoUsuarioPersona.persona);
     }
 
+    public borrarPerfil(perfil: ModeloTipoUsuarioPersona) {
+        this.svrPersonaUsuario.eliminarRol(perfil._id);
+    }
+
+
     /**
      * Al seleccionar la persona de la pantalla obtiene los roles por el
      * id_persona

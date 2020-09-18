@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ModeloTipoUsuarioPersona, TipoUsuarioPersona, TipoUsuarioPersonaDto} from '../../classes/persona/TipoUsuarioPersona';
 import {
+    CRUD_ELIMINAR,
     CRUD_TIPO_USUARIO_PERSONA,
     CRUD_TIPO_USUARIO_PERSONA_ACTUALIZAR_FOTO,
     CRUD_TIPO_USUARIO_PERSONA_INSERTAR
@@ -48,6 +49,12 @@ export class TipoUsuarioPersonaService {
             (await this.genericService.servicioRestGenericoGet({persona: idPersona}, OBTENER_TODOS_PERSONA_TIPO_USUARIO_POR_PERSONA, requestOptions)) as ModeloTipoUsuarioPersona[];
         return lstTipoPersonaUsuario;
     }
+
+    public async eliminarRol(idTabla: string) {
+        const requestOptions = new RequestOptions();
+        await this.genericService.servicioRestGenericoGet({idTabla}, CRUD_ELIMINAR, requestOptions);
+    }
+
 
     /**
      * Obtiene documento tipo_usuario_persona por idtipoUsuario

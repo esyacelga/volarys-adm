@@ -13,6 +13,7 @@ export class Articulo {
     public esServicio: false;
     public esBanner: false;
     public permiteComentar: false;
+    public ocultarBotonSolicitar: false;
     public img?: string[];
     public verObservacion: false;
     public obsevacion: string;
@@ -32,8 +33,11 @@ export class ObjetoArticulo {
     public esServicio: false;
     public esBanner: false;
     public permiteComentar: false;
+    public ocultarBotonSolicitar: false;
     public verObservacion: false;
     public obsevacion: string;
+    public horaInicio: Date;
+    public horaFin: Date;
     public coords: string;
     public img?: string[];
 }

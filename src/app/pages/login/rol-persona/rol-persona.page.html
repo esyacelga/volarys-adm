@@ -40,6 +40,9 @@
                 <ion-label>{{item.tipoUsuario.descripcion}}</ion-label>
                 <ion-note slot="end" color="primary">{{item.usuario.playerId}}</ion-note>
             </ion-item>
+            <ion-button (click)="borrarPerfil(item);objPersona=null">
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
         </div>
         <section *ngFor="let iterador of lstTipoUsuario">
             <ion-button (click)="crearRol(iterador)" expand="block">ROL {{' '}}{{iterador.descripcion}}</ion-button>
