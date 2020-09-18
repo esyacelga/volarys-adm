@@ -36,6 +36,7 @@ export class ObjetoArticulo {
     public ocultarBotonSolicitar: false;
     public verObservacion: false;
     public obsevacion: string;
+    public obsevacionLarga: string;
     public horaInicio: Date;
     public horaFin: Date;
     public coords: string;

@@ -108,6 +108,12 @@
                 <ion-input [(ngModel)]="articulo.obsevacion"></ion-input>
             </ion-item>
 
+
+            <ion-item color="dark" *ngIf="articulo.verObservacion">
+                <ion-label position="floating">Descripcion Extensa</ion-label>
+                <ion-textarea [(ngModel)]="articulo.obsevacionLarga"></ion-textarea>
+            </ion-item>
+
             <ion-button
                     type="submit"
                     (click)="registrarNuevo(articulo)"
