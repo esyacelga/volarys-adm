@@ -17,11 +17,13 @@ import {OneSignal} from '@ionic-native/onesignal/ngx';
 import {WebView} from '@ionic-native/ionic-webview/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
 import {CallNumber} from '@ionic-native/call-number/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RestConectionModule, IonicStorageModule.forRoot()],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RestConectionModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
     providers: [
         ComponentModule,
         StatusBar,
