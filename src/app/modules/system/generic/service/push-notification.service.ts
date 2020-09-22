@@ -1,11 +1,12 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {OneSignal, OSNotification, OSNotificationPayload} from '@ionic-native/onesignal/ngx';
 import {NavController} from '@ionic/angular';
-import {OBTENER_EVIO_NOTIFICACION} from '../classes/constant';
+import {OBTENER_EVIO_NOTIFICACION, OBTENER_LLAVE_PRIMARIA, OBTENER_REGISTRAR_SUBSCRIPCION} from '../classes/constant';
 import {MensajeOneSignal} from '../classes/MensajeOneSignal';
 import {RequestOptions} from '../classes/RequestOptions';
 import {ExecuteCallProcedureService} from './execute-call-procedure.service';
 import {StorageAppService} from './storage-app.service';
+import {KeyInteface, ObjSubscripcionInterface} from '../../../../classes/interface/common/ObjSubscripcionInterface';
 
 @Injectable({
     providedIn: 'root',
@@ -26,6 +27,21 @@ export class PushNotificationService {
                 private nav: NavController,
                 private oneSignal: OneSignal, private svrSorage: StorageAppService) {
         this.cargarMensajes();
+    }
+
+    public async obtenerLlavePublica() {
+        const options = new RequestOptions();
+        options.mostrarLoading = false;
+        const obj = await this.genericService.servicioRestGenericoGet({}, OBTENER_LLAVE_PRIMARIA, options);
+        return obj;
+    }
+
+
+    public async registrarSubscripcion(subscribe: ObjSubscripcionInterface) {
+        const options = new RequestOptions();
+        options.mostrarLoading = false;
+        const obj = await this.genericService.servicioRestGenericoGet(subscribe, OBTENER_REGISTRAR_SUBSCRIPCION, options);
+        return obj;
     }
 
     public async enviarNotificacion(mensaje: MensajeOneSignal, mensajeExito) {

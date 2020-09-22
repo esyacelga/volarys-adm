@@ -4,7 +4,8 @@ export const URL_SERVICIOS = 'http://localhost:3000';
 export const FORMATO_FECHA = 'dd/MM/yyyy';
 export const DELIMITADOR_FECHA_IONIC = '-';
 export const GRUPO_CLIENTE = 'CLIENTE';
-export const GRUPO_ADMINISTRADOR = 'ADMINISTRADOR';
+export const OBTENER_LLAVE_PRIMARIA = 'notificacion/obtenerkey';
+export const OBTENER_REGISTRAR_SUBSCRIPCION = 'notificacion/generarSubscripcion';
 export const OFFLINE = 'Sin conexión';
 export const SUCCESS_MESSAGE = 'Proceso ejecutado exitosamente';
 export const ERROR_MESSAGE = 'Hubo un problema en la aplicación, por favor espere, estamos solucionando este problema';
@@ -18,6 +19,7 @@ export const COLOR_TOAST_MEDIUM = 'medium';
 export const COLOR_TOAST_DARK = 'dark';
 export const COLOR_TOAST_MORADO = 'tertiary';
 export const OBTENER_EVIO_NOTIFICACION = 'notificacion';
+
 
 
 // Contantes servicios rest

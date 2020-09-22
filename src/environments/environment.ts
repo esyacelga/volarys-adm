@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  url: 'https://volarys.net',
+  url: 'http://localhost:3000',
 };
 
 /*

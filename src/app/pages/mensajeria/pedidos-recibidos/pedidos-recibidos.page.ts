@@ -35,6 +35,28 @@ export class PedidosRecibidosPage implements OnInit {
 
     }
 
+    public llamar() {
+        // Comprobamos si el navegador soporta las notificaciones
+        if (!window.Notification) {
+            alert('Este navegador no soporta las notificaciones del sistema');
+        }
+
+        if (Notification.permission === 'granted') {
+            const test = new Notification('Hola mundo 1111');
+        } else { // @ts-ignore
+            if (Notification.permission !== 'denied' || Notification.permission === 'default') {
+
+                Notification.requestPermission(permission => {
+                    if (permission === 'granted') {
+                        const test = new Notification('Hola mundo 11111111555');
+                    }
+                });
+            }
+        }
+
+
+    }
+
     public callNow(phoneNumber: string) {
         this.callNumber.callNumber(phoneNumber, true)
             .then(res => console.log('Launched dialer!', res))

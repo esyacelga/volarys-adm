@@ -61,6 +61,15 @@ export class Util {
         toast.present();
     }
 
+    public async presentToastExtend(mensaje, color) {
+        const toast = await this.notify.create({
+            message: mensaje,
+            duration: 10000,
+            color
+        });
+        toast.present();
+    }
+
     public toXML = function(json: any) {
         return null;
     };
