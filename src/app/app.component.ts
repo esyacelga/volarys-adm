@@ -14,6 +14,7 @@ import {ObjSubscripcionInterface} from './classes/interface/common/ObjSubscripci
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+    private audio = new Audio();
 
     constructor(
         private platform: Platform,
@@ -137,9 +138,11 @@ export class AppComponent implements OnInit {
             });
 
         this.swPush.messages.subscribe(obj => {
-            console.log(obj);
-            // @ts-ignore
-            console.log(obj.notification.body);
+            this.audio.src = 'assets/sonidos/SD_ALERT_26.mp3';
+            this.audio.pause();
+            this.audio.currentTime = 0;
+            this.audio.load();
+            this.audio.play();
             // @ts-ignore
             this.utl.presentToastExtend(obj.notification.body, COLOR_TOAST_SUCCESS);
         });

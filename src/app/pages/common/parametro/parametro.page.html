@@ -9,11 +9,11 @@
     <ion-list *ngIf="objParametro">
         <ion-item color="dark">
             <ion-label position="floating">Codigo</ion-label>
-            <ion-input class="ion-text-uppercase" [(ngModel)]="objParametro.codigo"></ion-input>
+            <ion-input [(ngModel)]="objParametro.codigo"></ion-input>
         </ion-item>
         <ion-item color="dark">
             <ion-label position="floating">Valor</ion-label>
-            <ion-input class="ion-text-uppercase" [(ngModel)]="objParametro.valor"></ion-input>
+            <ion-input [(ngModel)]="objParametro.valor"></ion-input>
         </ion-item>
         <ion-button
                 type="submit"

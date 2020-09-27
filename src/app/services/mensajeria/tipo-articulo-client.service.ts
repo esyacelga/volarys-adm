@@ -15,9 +15,9 @@ export class TipoArticuloClientService {
 
     async registarTipoArticulo(tipoArticulo: TipoArticulo) {
         const requestOptions = new RequestOptions();
-        tipoArticulo.nombre = tipoArticulo.nombre.toUpperCase();
-        tipoArticulo.descripcion = tipoArticulo.descripcion.toUpperCase();
-        tipoArticulo.codigo = tipoArticulo.codigo.toUpperCase();
+        tipoArticulo.nombre = tipoArticulo.nombre;
+        tipoArticulo.descripcion = tipoArticulo.descripcion;
+        tipoArticulo.codigo = tipoArticulo.codigo;
         return await this.genericService.servicioRestGenericoPost(tipoArticulo, URL_CREAR_TIPO_ARTICULO, requestOptions) as TipoArticulo;
     }
 
@@ -26,5 +26,6 @@ export class TipoArticuloClientService {
         const requestOptions = new RequestOptions();
         return await this.genericService.servicioRestGenericoGet({}, URL_OBTENER_TODOS_ARTICULO, requestOptions);
     }
+
 
 }

@@ -5,4 +5,5 @@ export class ArticuloSegmento {
     estado: number;
     esServicio: boolean;
     esServicioTransporte: boolean;
+    codigoParametro: string;
 }
