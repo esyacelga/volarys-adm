@@ -44,6 +44,7 @@ export class SolicitudService {
 
     async obtenerPedidosRecientes() {
         const requestOptions = new RequestOptions();
+        requestOptions.mostrarLoading = false;
         const data: PedidoInterface[] = (await this.genericService.servicioRestGenericoGet({estado: 1}, OBTENER_PEDIDOS_POR_ESTADO, requestOptions)) as PedidoInterface[];
         return data;
     }

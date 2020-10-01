@@ -7,6 +7,7 @@ import {Util} from './modules/system/generic/classes/util';
 import {COLOR_TOAST_SUCCESS, COLOR_TOAST_WARNING} from './modules/system/generic/classes/constant';
 import {SwPush} from '@angular/service-worker';
 import {ObjSubscripcionInterface} from './classes/interface/common/ObjSubscripcionInterface';
+import {DataService} from './services/common/data.service';
 
 @Component({
     selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
     private audio = new Audio();
 
     constructor(
+        private dataService: DataService,
         private platform: Platform,
         private utl: Util,
         private swPush: SwPush,
@@ -143,6 +145,7 @@ export class AppComponent implements OnInit {
             this.audio.currentTime = 0;
             this.audio.load();
             this.audio.play();
+            this.dataService.actualiza.emit(true);
             // @ts-ignore
             this.utl.presentToastExtend(obj.notification.body, COLOR_TOAST_SUCCESS);
         });

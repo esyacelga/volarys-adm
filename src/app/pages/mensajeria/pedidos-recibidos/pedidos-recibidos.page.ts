@@ -11,6 +11,9 @@ import {PersonaModel} from '../../../classes/model/persona/PersonaModel';
 import {NotificacionIndividualClass} from '../../../classes/model/Notificacion/NotificacionIndividualModel';
 import {SolcitudCabeceraModel} from '../../../classes/mensajeria/SolcitudCabeceraModel';
 import {CallNumber} from '@ionic-native/call-number/ngx';
+import {SwPush} from '@angular/service-worker';
+import {Platform} from '@ionic/angular';
+import {DataService} from '../../../services/common/data.service';
 
 @Component({
     selector: 'app-pedidos-recibidos',
@@ -29,33 +32,15 @@ export class PedidosRecibidosPage implements OnInit {
 
     constructor(private svrSolicitud: SolicitudService,
                 private util: Util,
+                private dataService: DataService,
+                private platform: Platform,
+                private swPush: SwPush,
                 private callNumber: CallNumber,
                 private svrTps: TipoUsuarioPersonaService,
                 private svrNot: NotificacionMasivaService) {
 
     }
 
-    public llamar() {
-        // Comprobamos si el navegador soporta las notificaciones
-        if (!window.Notification) {
-            alert('Este navegador no soporta las notificaciones del sistema');
-        }
-
-        if (Notification.permission === 'granted') {
-            const test = new Notification('Hola mundo 1111');
-        } else { // @ts-ignore
-            if (Notification.permission !== 'denied' || Notification.permission === 'default') {
-
-                Notification.requestPermission(permission => {
-                    if (permission === 'granted') {
-                        const test = new Notification('Hola mundo 11111111555');
-                    }
-                });
-            }
-        }
-
-
-    }
 
     public callNow(phoneNumber: string) {
         this.callNumber.callNumber(phoneNumber, true)
@@ -98,7 +83,7 @@ export class PedidosRecibidosPage implements OnInit {
         const solicitud: SolcitudCabeceraModel = new SolcitudCabeceraModel(pedido.pedido._id, pedido.usuario, estado);
         await this.svrSolicitud.actualizarSolicitud(solicitud);
         this.contenedor = null;
-        this.ngOnInit();
+        this.cargarPedidos();
     }
 
     async actualiarPedidoRecepcion(estado: number, pedido: PedidoResumen) {
@@ -115,11 +100,26 @@ export class PedidosRecibidosPage implements OnInit {
         }
     }
 
-    async ngOnInit() {
+    public async cargarPedidos() {
         this.lstPedidoResumen = [];
+        this.lstPedido = [];
         this.lstPedido = await this.svrSolicitud.obtenerPedidosRecientes();
+        console.log('******');
+        console.log(this.lstPedido);
+        console.log('******');
         for (const iterador of this.lstPedido) {
             this.lstPedidoResumen.push(new PedidoResumen(iterador));
         }
+        console.log('**/////****');
+        console.log(this.lstPedidoResumen);
+        console.log('**////****');
+    }
+
+    async ngOnInit() {
+        this.dataService.actualiza.subscribe((actualiza: boolean) => {
+            this.cargarPedidos();
+        });
+        this.cargarPedidos();
+
     }
 }
